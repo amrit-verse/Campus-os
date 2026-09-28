@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(__dirname));
 
 const dataFilePath = path.join(__dirname, "data", "timetables.json");
 
@@ -29,12 +30,14 @@ function loadDataset() {
 loadDataset();
 
 const toMin = (t) => {
-  if (!t) return 0;
+  if (!t || typeof t !== "string" || !t.includes(":")) return 630;
   const [h, m] = t.split(":").map(Number);
+  if (isNaN(h) || isNaN(m)) return 630;
   return h * 60 + m;
 };
 
 const minToTime = (m) => {
+  if (isNaN(m)) m = 630;
   const h = Math.floor(m / 60);
   const min = m % 60;
   return `${String(h).padStart(2, "0")}:${String(min).padStart(2, "0")}`;
@@ -56,7 +59,6 @@ const getNowMin = (tStr) => {
   }
   const d = new Date();
   const current = d.getHours() * 60 + d.getMinutes();
-  // Default to 10:30 AM (630 mins) if outside standard college hours (08:00 - 18:00)
   if (current < 480 || current > 1080) {
     return 630; // 10:30 AM default test time slot
   }
@@ -64,7 +66,7 @@ const getNowMin = (tStr) => {
 };
 
 function parseIntent(q = "") {
-  const s = q.toLowerCase();
+  const s = String(q || "").toLowerCase();
   
   let floor = null;
   if (/ground/.test(s)) floor = "Ground Floor";
@@ -115,7 +117,6 @@ function evaluateRoom(room, day, startMin, duration) {
   const daySchedule = (room.schedule && room.schedule[day]) ? room.schedule[day] : [];
   const endMin = startMin + duration;
 
-  // Check current occupying class
   let currentClass = null;
   for (const slot of daySchedule) {
     const s = toMin(slot[0]);
@@ -131,14 +132,12 @@ function evaluateRoom(room, day, startMin, duration) {
     }
   }
 
-  // Check collision for requested duration window
   const hasConflict = daySchedule.some(slot => {
     const s = toMin(slot[0]);
     const e = toMin(slot[1]);
     return startMin < e && endMin > s;
   });
 
-  // Find next upcoming class start after startMin
   let nextClassStartMin = 1080; // Default end of day (18:00)
   let nextClass = null;
   for (const slot of daySchedule) {
@@ -166,7 +165,7 @@ function evaluateRoom(room, day, startMin, duration) {
   return {
     ...room,
     available: !hasConflict && !currentClass,
-    status, // "FREE", "SOON", "BUSY"
+    status,
     currentClass,
     nextClass,
     freeUntil: minToTime(nextClassStartMin),
@@ -226,7 +225,10 @@ app.post("/api/import", (req, res) => {
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  const indexPath = fs.existsSync(path.join(__dirname, "index.html")) 
+    ? path.join(__dirname, "index.html") 
+    : path.join(__dirname, "public", "index.html");
+  res.sendFile(indexPath);
 });
 
 app.listen(PORT, () => console.log(`SmartSearch Floor Manager PRO running at http://localhost:${PORT}`));

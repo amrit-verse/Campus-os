@@ -3,7 +3,6 @@
 let scene, camera, renderer, controls;
 let roomMeshes = [];
 let hoveredMesh = null;
-let selectedRoomData = null;
 let currentFloorFilter = "ALL";
 let animationFrameId = null;
 
@@ -24,6 +23,11 @@ function init3DMap(containerId = "map3dContainer") {
   const container = document.getElementById(containerId);
   if (!container) return;
 
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
+
   container.innerHTML = ""; // Clear existing canvas if any
 
   const width = container.clientWidth || 800;
@@ -31,7 +35,7 @@ function init3DMap(containerId = "map3dContainer") {
 
   // 1. Scene
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x0f172a); // Deep slate background
+  scene.background = new THREE.Color(0x070b12); // macOS deep slate background
 
   // 2. Camera (Isometric Orthographic style or Perspective)
   const aspect = width / height;
@@ -57,17 +61,17 @@ function init3DMap(containerId = "map3dContainer") {
   }
 
   // 5. Lighting
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
   scene.add(ambientLight);
 
-  const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
+  const dirLight = new THREE.DirectionalLight(0xffffff, 0.95);
   dirLight.position.set(30, 40, 20);
   dirLight.castShadow = true;
   dirLight.shadow.mapSize.width = 1024;
   dirLight.shadow.mapSize.height = 1024;
   scene.add(dirLight);
 
-  const blueLight = new THREE.PointLight(0x3b82f6, 0.5, 50);
+  const blueLight = new THREE.PointLight(0x38bdf8, 0.6, 50);
   blueLight.position.set(-20, 15, -20);
   scene.add(blueLight);
 
@@ -81,9 +85,10 @@ function init3DMap(containerId = "map3dContainer") {
 
   // Window Resize
   window.addEventListener("resize", () => {
-    if (!container) return;
+    if (!container || !renderer || !camera) return;
     const w = container.clientWidth;
     const h = container.clientHeight;
+    if (w === 0 || h === 0) return;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);
@@ -127,7 +132,6 @@ function update3DMapRooms(roomsData) {
     const roomsOnFloor = roomsData.filter(r => r.floor === floorName);
     const yBase = floorYPositions[floorName];
 
-    // Layout rooms in a 2x3 or 2x2 grid per floor slab
     roomsOnFloor.forEach((room, idx) => {
       const row = Math.floor(idx / 3);
       const col = idx % 3;
@@ -155,6 +159,7 @@ function update3DMapRooms(roomsData) {
       const edges = new THREE.EdgesGeometry(roomGeo);
       const lineMat = new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.4, transparent: true });
       const line = new THREE.LineSegments(edges, lineMat);
+      line.userData = { isWireframe: true };
       roomMesh.add(line);
 
       // Store metadata
@@ -200,17 +205,24 @@ function setupRaycaster(container) {
   const raycaster = new THREE.Raycaster();
   const mouse = new THREE.Vector2();
 
+  function resolveRoomObject(intersectObj) {
+    if (!intersectObj) return null;
+    if (intersectObj.userData && intersectObj.userData.isRoom) return intersectObj;
+    if (intersectObj.parent && intersectObj.parent.userData && intersectObj.parent.userData.isRoom) return intersectObj.parent;
+    return null;
+  }
+
   function onPointerMove(event) {
     const rect = container.getBoundingClientRect();
     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
     raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(roomMeshes.filter(m => m.visible));
+    const intersects = raycaster.intersectObjects(roomMeshes.filter(m => m.visible), true);
 
     if (intersects.length > 0) {
-      const hit = intersects[0].object;
-      if (hoveredMesh !== hit) {
+      const hit = resolveRoomObject(intersects[0].object);
+      if (hit && hoveredMesh !== hit) {
         if (hoveredMesh) resetMeshState(hoveredMesh);
         hoveredMesh = hit;
         hoveredMesh.position.y = hoveredMesh.userData.originalY + 0.3;
@@ -219,7 +231,7 @@ function setupRaycaster(container) {
         container.style.cursor = "pointer";
 
         showTooltip(event, hit.userData.roomData);
-      } else {
+      } else if (hit) {
         moveTooltip(event);
       }
     } else {
@@ -233,7 +245,7 @@ function setupRaycaster(container) {
   }
 
   function onClick(event) {
-    if (hoveredMesh && hoveredMesh.userData.roomData) {
+    if (hoveredMesh && hoveredMesh.userData && hoveredMesh.userData.roomData) {
       const room = hoveredMesh.userData.roomData;
       if (window.openRoomModal) {
         window.openRoomModal(room);
@@ -242,9 +254,12 @@ function setupRaycaster(container) {
   }
 
   function resetMeshState(mesh) {
-    mesh.position.y = mesh.userData.originalY;
-    mesh.material.emissive = new THREE.Color(0x000000);
-    mesh.material.emissiveIntensity = 0;
+    if (!mesh || !mesh.userData) return;
+    mesh.position.y = mesh.userData.originalY || mesh.position.y;
+    if (mesh.material) {
+      mesh.material.emissive = new THREE.Color(0x000000);
+      mesh.material.emissiveIntensity = 0;
+    }
   }
 
   container.addEventListener("pointermove", onPointerMove);
@@ -252,6 +267,7 @@ function setupRaycaster(container) {
 }
 
 function showTooltip(event, room) {
+  if (!room) return;
   let tt = document.getElementById("map3dTooltip");
   if (!tt) {
     tt = document.createElement("div");
