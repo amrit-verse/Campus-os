@@ -133,7 +133,6 @@ async function fetchRooms() {
     currentData.time = data.time;
     currentData.rooms = data.rooms;
   } catch (err) {
-    // Client-side fallback for GitHub Pages
     const dataset = await getLocalDataset();
     if (dataset) {
       const startMin = time === "now" ? 630 : toMin(time);
@@ -173,7 +172,6 @@ async function performAISearch() {
 
     renderIntentBanner(data.intent, data.availableCount);
   } catch (err) {
-    // Client-Side AI Intent Parser fallback for GitHub Pages
     const dataset = await getLocalDataset();
     if (dataset) {
       const s = query.toLowerCase();
@@ -428,6 +426,42 @@ function copySquadInvite() {
   });
 }
 
+// 1-Click Jury Quick Demos
+function runJuryDemo(type) {
+  if (type === "ai_ground") {
+    switchTab("#tabAIFinder", "#viewGrid");
+    $("#aiSearchQuery").value = "I need an AC room on the ground floor for me and my team for the next 2 hours";
+    performAISearch();
+    showToast("✨ Filtered AC Rooms on Ground Floor!");
+  } else if (type === "3d_countdown") {
+    switchTab("#tab3DMap", "#view3DMap");
+    const room = currentData.rooms.find(r => r.id === "IST 509" || r.id === "G-101") || currentData.rooms[0];
+    if (room) openRoomModal(room);
+    showToast("⏱️ Opened Live Countdown Timer!");
+  } else if (type === "squad_share") {
+    switchTab("#tab3DMap", "#view3DMap");
+    const room = currentData.rooms.find(r => r.id === "IST 509") || currentData.rooms[0];
+    if (room) openRoomModal(room);
+    setTimeout(() => {
+      copySquadInvite();
+    }, 400);
+  } else if (type === "attendance_risk") {
+    switchTab("#tabAttendance", "#viewAttendance");
+    if (window.renderAttendanceCalculator) {
+      window.renderAttendanceCalculator();
+      window.applyPreset('detention');
+      showToast("🚨 Simulated Attendance Detention Risk Scenario!");
+    }
+  }
+}
+
+function switchTab(btnSel, viewSel) {
+  $$(".tab-btn").forEach(b => b.classList.remove("active"));
+  $$(".view-panel").forEach(p => p.classList.remove("active"));
+  $(btnSel).classList.add("active");
+  $(viewSel).classList.add("active");
+}
+
 // Event Listeners Initialization
 function initEventListeners() {
   // Day & Time select
@@ -463,10 +497,7 @@ function initEventListeners() {
 
   tabs.forEach(t => {
     $(t.btn).onclick = () => {
-      $$(".tab-btn").forEach(b => b.classList.remove("active"));
-      $$(".view-panel").forEach(p => p.classList.remove("active"));
-      $(t.btn).classList.add("active");
-      $(t.view).classList.add("active");
+      switchTab(t.btn, t.view);
 
       if (t.key === "3dmap") {
         if (!window.scene) {
@@ -519,3 +550,4 @@ window.onload = async () => {
 };
 
 window.openRoomModal = openRoomModal;
+window.runJuryDemo = runJuryDemo;
