@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>THE QUANTUM QUAD | SmartSearch PRO & Free Class Locator</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Three.js & OrbitControls for Phase 2 3D Map -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+      <div class="nav-brand">
+        <div class="brand-logo">Q</div>
+        <div class="brand-text">
+          <strong>THE QUANTUM QUAD</strong>
+          <small>SMARTSEARCH PRO • GRAND FINALE EDITION</small>
+        </div>
+      </div>
+
+      <!-- Time & Day Simulation Controls -->
+      <div class="sim-controls">
+        <div class="control-group">
+          <label for="daySelect">Day:</label>
+          <select id="daySelect">
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="timeSelect">Time:</label>
+          <select id="timeSelect">
+            <option value="now">⚡ Live Time (10:30 AM)</option>
+            <option value="08:30">08:30 AM (Period 1)</option>
+            <option value="09:20">09:20 AM (Period 2)</option>
+            <option value="10:30">10:30 AM (Period 3)</option>
+            <option value="11:20">11:20 AM (Period 4)</option>
+            <option value="13:10">01:10 PM (Period 5)</option>
+            <option value="14:00">02:00 PM (Period 6)</option>
+            <option value="15:00">03:00 PM (Period 7)</option>
+            <option value="16:00">04:00 PM (Period 8)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <span class="jury-badge">🏆 TEAM THE QUANTUM QUAD</span>
+      </div>
+    </header>
+
+    <!-- Main View Content -->
+    <main class="main-content">
+      
+      <!-- Hero Header Section -->
+      <section class="hero-banner">
+        <div class="hero-content">
+          <span class="kicker">GRAND FINALE UNIFIED HUB • THE QUANTUM QUAD</span>
+          <h1>The Free Class Locator.<br><em>Zero friction, 3D maps & squad share.</em></h1>
+          <p>Complete integration of Round 1 Attendance Engine, Phase 1 AI Room Finder, and Phase 2 3D Interactive Building Locator.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-card">
+            <small>ROOMS MONITORED</small>
+            <b id="statTotalRooms">20</b>
+            <span>across 4 floors</span>
+          </div>
+          <div class="stat-card highlight">
+            <small>AVAILABLE NOW</small>
+            <b id="statFreeRooms">—</b>
+            <span>free for study</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- View Switcher Tabs -->
+      <div class="view-tabs">
+        <button id="tab3DMap" class="tab-btn active"><span class="icon">🏢</span> 3D Free Class Map</button>
+        <button id="tabGrid" class="tab-btn"><span class="icon">📊</span> Live Floor Grid</button>
+        <button id="tabAIFinder" class="tab-btn"><span class="icon">🤖</span> AI Smart Finder</button>
+        <button id="tabAttendance" class="tab-btn"><span class="icon">🧮</span> Attendance Calculator</button>
+      </div>
+
+      <!-- PHASE 1: AI Natural Language Finder Bar -->
+      <section class="ai-finder-card" id="aiFinderSection">
+        <div class="card-header">
+          <div>
+            <span class="section-kicker">NATURAL LANGUAGE ROOM SEARCH</span>
+            <h2>Tell us what room you need</h2>
+          </div>
+          <span class="ai-status-tag" id="aiStatusTag">AI READY</span>
+        </div>
+
+        <div class="search-bar-wrap">
+          <span class="sparkle">✦</span>
+          <input id="aiSearchQuery" type="text" value="I need an AC room on the ground floor for me and my team for the next 2 hours" placeholder="e.g. I need an AC room on 1st floor with projector for 90 minutes">
+          <button id="aiSearchBtn" class="primary-btn">Search AI ↗</button>
+        </div>
+
+        <div class="prompt-suggestions">
+          <span class="suggestion-label">Try asking:</span>
+          <button class="chip" data-q="I need an AC room on the ground floor for me and my team for the next 2 hours">AC · Ground Floor · 2 Hours</button>
+          <button class="chip" data-q="Find a projector room on 1st floor for 1 hour">Projector · 1st Floor · 1 Hour</button>
+          <button class="chip" data-q="Show me a lab on 2nd floor with 40 seats">Lab · 2nd Floor · 40 Seats</button>
+          <button class="chip" data-q="Room in 3rd Floor with smart board for 90 minutes">Smart Board · 3rd Floor · 90 Mins</button>
+        </div>
+
+        <div id="aiIntentResult" class="intent-banner"></div>
+      </section>
+
+      <!-- PHASE 2: 3D Interactive Building Map -->
+      <section class="view-panel active" id="view3DMap">
+        <div class="map-toolbar">
+          <div class="map-title">
+            <h3>3D Building Visualization — FreeRoom Engine</h3>
+            <p>Rotate, zoom, and click rooms to view live countdown timers & invite your squad</p>
+          </div>
+          
+          <div class="floor-selector-3d">
+            <span class="selector-label">Filter Floor:</span>
+            <button class="floor-3d-btn active" data-floor="ALL">All Floors</button>
+            <button class="floor-3d-btn" data-floor="Ground Floor">Ground</button>
+            <button class="floor-3d-btn" data-floor="1st Floor">1st Floor</button>
+            <button class="floor-3d-btn" data-floor="2nd Floor">2nd Floor</button>
+            <button class="floor-3d-btn" data-floor="3rd Floor">3rd Floor</button>
+          </div>
+
+          <div class="map-legend">
+            <span class="legend-item"><i class="dot free"></i> Free (>= 1h)</span>
+            <span class="legend-item"><i class="dot soon"></i> Tight (< 30m)</span>
+            <span class="legend-item"><i class="dot busy"></i> Occupied</span>
+          </div>
+        </div>
+
+        <!-- WebGL 3D Canvas Container -->
+        <div id="map3dContainer" class="map-canvas-container"></div>
+      </section>
+
+      <!-- PHASE 1: Live Floor Grid Section -->
+      <section class="view-panel" id="viewGrid">
+        <div class="grid-controls-bar">
+          <div class="filter-group">
+            <label>Floor:</label>
+            <select id="filterFloor">
+              <option value="">All Floors</option>
+              <option>Ground Floor</option>
+              <option>1st Floor</option>
+              <option>2nd Floor</option>
+              <option>3rd Floor</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Feature:</label>
+            <select id="filterFeature">
+              <option value="">Any Feature</option>
+              <option>AC</option>
+              <option>Projector</option>
+              <option>Lab</option>
+              <option>Smart Board</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Capacity:</label>
+            <select id="filterCapacity">
+              <option value="0">Any Capacity</option>
+              <option value="40">40+ Seats</option>
+              <option value="50">50+ Seats</option>
+              <option value="60">60+ Seats</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Status:</label>
+            <select id="filterStatus">
+              <option value="">All Rooms</option>
+              <option value="FREE">Free Only</option>
+              <option value="SOON">Ending Soon</option>
+              <option value="BUSY">Occupied Only</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="floorGridContainer" class="floors-container"></div>
+      </section>
+
+      <!-- ROUND 1 INTEGRATION: Attendance Calculator Section -->
+      <section class="view-panel" id="viewAttendance">
+        <div id="attendanceCalculatorSection"></div>
+      </section>
+
+    </main>
+
+    <!-- PHASE 2: Interactive Room Modal with Live Countdown & Squad Share -->
+    <div id="roomModal" class="modal-backdrop">
+      <div class="modal-card">
+        <button id="modalCloseBtn" class="modal-close">&times;</button>
+        
+        <div class="modal-header">
+          <div>
+            <span id="modalRoomFloor" class="kicker">GROUND FLOOR</span>
+            <h2 id="modalRoomTitle">IST 509</h2>
+            <p id="modalRoomName">Innovation & Project Lab</p>
+          </div>
+          <span id="modalStatusBadge" class="status-badge free">FREE</span>
+        </div>
+
+        <div class="modal-body">
+          
+          <!-- PHASE 2: Live Countdown Timer -->
+          <div class="countdown-box">
+            <span class="timer-label" id="timerLabel">TIME REMAINING UNTIL NEXT CLASS:</span>
+            <div class="timer-display" id="countdownTimer">01:24:15</div>
+            <p class="timer-sub" id="timerSubtext">Free until 02:30 PM</p>
+          </div>
+
+          <!-- Room Specifications -->
+          <div class="room-specs">
+            <div class="spec-item">
+              <small>CAPACITY</small>
+              <b id="modalCapacity">80 Seats</b>
+            </div>
+            <div class="spec-item">
+              <small>AMENITIES</small>
+              <div id="modalFeatures" class="tags-list"></div>
+            </div>
+          </div>
+
+          <!-- Schedule Overview for Selected Room -->
+          <div class="schedule-section">
+            <h4>Today's Schedule Matrix (<span id="modalDay">Monday</span>)</h4>
+            <div id="modalScheduleList" class="schedule-list"></div>
+          </div>
+
+          <!-- PHASE 2: "Call the Squad" WhatsApp Share Integration -->
+          <div class="squad-callout">
+            <div class="squad-copy">
+              <h3>📣 Call the Squad!</h3>
+              <p>Claim this room and send your group a pre-filled WhatsApp invite instantly.</p>
+            </div>
+            <div class="squad-actions">
+              <button id="squadWhatsAppBtn" class="whatsapp-btn">
+                <span>💬</span> Invite on WhatsApp
+              </button>
+              <button id="squadCopyBtn" class="secondary-btn">
+                📋 Copy Invite Link
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toastNotification" class="toast">Link copied to clipboard!</div>
+
+    <!-- Footer for Jury Evaluation -->
+    <footer class="footer">
+      <div>Built with ❤️ by <strong>THE QUANTUM QUAD</strong> &nbsp;•&nbsp; Hackathon Grand Finale Entry</div>
+    </footer>
+
+  </div>
+
+  <script src="3d-map.js"></script>
+  <script src="attendance.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
