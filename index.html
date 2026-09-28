@@ -3,20 +3,39 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>THE QUANTUM QUAD | SmartSearch PRO & Free Class Locator</title>
+  <title>THE QUANTUM QUAD | SmartSearch PRO & Attendance Predictor</title>
   
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
+  <!-- Tailwind CSS CDN for Attendance Dashboard Components -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+          }
+        }
+      }
+    }
+  </script>
+
   <!-- Three.js & OrbitControls for Phase 2 3D Map -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   
+  <!-- Chart.js & Confetti CDN for Attendance Predictor Visuals -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="bg-[#070b12] text-slate-100 min-h-screen">
   <div class="app-shell">
     
     <!-- macOS Style Top Navigation Window Header -->
@@ -31,7 +50,7 @@
         <div class="brand-logo">Q</div>
         <div class="brand-text">
           <strong>THE QUANTUM QUAD</strong>
-          <small>SMARTSEARCH PRO • macOS FINALE EDITION</small>
+          <small>SMARTSEARCH PRO • ATTENDANCE PREDICTOR</small>
         </div>
       </div>
 
@@ -76,8 +95,8 @@
       <section class="hero-banner macos-card">
         <div class="hero-content">
           <span class="kicker">GRAND FINALE UNIFIED HUB • THE QUANTUM QUAD</span>
-          <h1>The Free Class Locator.<br><em>Zero friction, 3D maps & squad share.</em></h1>
-          <p>Complete integration of Round 1 Attendance Engine, Phase 1 AI Room Finder, and Phase 2 3D Interactive Building Locator.</p>
+          <h1>The Free Class Locator & Attendance Predictor.<br><em>3D maps, squad share & detention solver.</em></h1>
+          <p>Complete integration of Round 1 Attendance Predictor & OD Simulator, Phase 1 AI Room Finder, and Phase 2 3D Interactive Building Locator.</p>
         </div>
         <div class="hero-stats">
           <div class="stat-card">
@@ -112,7 +131,7 @@
         <button id="tab3DMap" class="tab-btn active"><span class="icon">🏢</span> 3D Free Class Map</button>
         <button id="tabGrid" class="tab-btn"><span class="icon">📊</span> Live Floor Grid</button>
         <button id="tabAIFinder" class="tab-btn"><span class="icon">🤖</span> AI Smart Finder</button>
-        <button id="tabAttendance" class="tab-btn"><span class="icon">🧮</span> Attendance Calculator</button>
+        <button id="tabAttendance" class="tab-btn"><span class="icon">🧮</span> Attendance Predictor</button>
       </div>
 
       <!-- PHASE 1: AI Natural Language Finder Card -->
@@ -219,9 +238,123 @@
         <div id="floorGridContainer" class="floors-container"></div>
       </section>
 
-      <!-- ROUND 1 INTEGRATION: Attendance Calculator Section -->
+      <!-- ROUND 1 INTEGRATION: Attendance Predictor Section (From The_Attendence_Predictor) -->
       <section class="view-panel" id="viewAttendance">
-        <div id="attendanceCalculatorSection"></div>
+        <div class="space-y-5">
+
+          <!-- Section Selector & Actions Bar -->
+          <div class="macos-card p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-3 w-full md:w-auto">
+              <span class="text-xl">📊</span>
+              <div class="w-full md:w-80">
+                <label class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Select Engineering Section (10 Sections):</label>
+                <select id="sectionSelector" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs font-semibold px-3 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500">
+                  <!-- Populated by timetables.js & attendance-engine.js -->
+                </select>
+              </div>
+            </div>
+
+            <!-- Quick Presets -->
+            <div class="flex items-center space-x-2 overflow-x-auto py-1">
+              <button type="button" onclick="applyStudentPreset('detention')" class="px-3 py-1.5 rounded-full bg-red-500/20 hover:bg-red-500/30 text-red-300 text-xs font-bold border border-red-400/30 transition">🚨 Detention Emergency</button>
+              <button type="button" onclick="applyStudentPreset('borderline')" class="px-3 py-1.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-bold border border-amber-400/30 transition">⚠️ Borderline (74%)</button>
+              <button type="button" onclick="applyStudentPreset('balanced')" class="px-3 py-1.5 rounded-full bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 text-xs font-bold border border-sky-400/30 transition">⚡ Balanced (82%)</button>
+              <button type="button" onclick="applyStudentPreset('elite')" class="px-3 py-1.5 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-xs font-bold border border-emerald-400/30 transition">🌟 Honor Roll (92%)</button>
+            </div>
+          </div>
+
+          <!-- Loud Irreversible Detention Warning Banner -->
+          <div id="irreversibleDetentionBanner" class="hidden animate-pulse bg-gradient-to-r from-red-900 via-rose-900 to-red-900 text-white p-5 rounded-3xl border-2 border-red-500 shadow-2xl relative overflow-hidden">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-3xl shrink-0">🚨</div>
+                <div>
+                  <div class="flex items-center space-x-2">
+                    <span class="px-2 py-0.5 text-[10px] font-black uppercase bg-white text-red-800 rounded">Critical Alert</span>
+                    <h3 class="text-lg font-black tracking-tight">IRREVERSIBLE DETENTION SHORTFALL</h3>
+                  </div>
+                  <p class="text-xs text-red-200 mt-1 leading-relaxed">
+                    Attendance in one or more subjects is so low that it is <strong>mathematically impossible to recover before November</strong> even with 100% attendance.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div id="irreversibleSubjectList" class="mt-3 pt-3 border-t border-red-500/40 divide-y divide-red-500/30 text-xs"></div>
+          </div>
+
+          <!-- Overview Gauges & Stats Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <!-- Overall Gauge -->
+            <div class="macos-card p-5 flex items-center space-x-4">
+              <div class="relative w-20 h-20 shrink-0">
+                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                  <path class="text-slate-800" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                  <path id="overallGaugeCircle" class="text-sky-400" stroke-dasharray="100, 100" stroke-dashoffset="25" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span id="overallAttendancePct" class="text-sm font-black text-white font-mono">--%</span>
+                </div>
+              </div>
+              <div>
+                <span class="text-xs font-semibold text-slate-400 block">Overall Standing</span>
+                <span id="overallStatusBadge" class="mt-1 inline-block px-2.5 py-0.5 text-[10px] font-black rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/25">CALCULATING</span>
+                <span id="dangerCountBadge" class="text-[11px] text-slate-400 block mt-1">Analyzing risks...</span>
+              </div>
+            </div>
+
+            <!-- Total Classes Left -->
+            <div class="macos-card p-5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold text-slate-400">Classes Remaining</span>
+                <span class="text-[10px] text-sky-400 font-bold uppercase">Until Nov</span>
+              </div>
+              <div class="mt-2 flex items-baseline space-x-2">
+                <span id="totalClassesLeft" class="text-3xl font-black text-sky-400 font-mono">--</span>
+                <span class="text-xs text-slate-400">periods</span>
+              </div>
+              <span class="text-xs text-slate-500 mt-1 block">Full semester remaining</span>
+            </div>
+
+            <!-- Planning Milestone -->
+            <div class="macos-card p-5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold text-slate-400">Planning Horizon</span>
+                <span class="text-[10px] text-purple-400 font-bold uppercase">Milestone</span>
+              </div>
+              <div class="mt-2 flex items-baseline space-x-2">
+                <span id="planningClassesLeft" class="text-3xl font-black text-purple-400 font-mono">--</span>
+                <span class="text-xs text-slate-400">classes</span>
+              </div>
+              <span class="text-xs text-slate-500 mt-1 block">Until preferred future date</span>
+            </div>
+
+            <!-- Max Possible % -->
+            <div class="macos-card p-5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold text-slate-400">Max Attainable %</span>
+                <span class="text-[10px] text-emerald-400 font-bold uppercase">100% Run</span>
+              </div>
+              <div class="mt-2 flex items-baseline space-x-2">
+                <span id="maxPossibleOverall" class="text-3xl font-black text-emerald-400 font-mono">--%</span>
+              </div>
+              <span class="text-xs text-slate-500 mt-1 block">If 100% attended from today</span>
+            </div>
+          </div>
+
+          <!-- Subject Cards Grid Container -->
+          <div class="macos-card p-6">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-base font-bold text-white">Subject Attendance & Danger Zone Engine</h3>
+                <p class="text-xs text-slate-400">Adjust percentages using sliders or numbers. Shows required classes for 75%, safe bunks, or detention shortfalls.</p>
+              </div>
+            </div>
+            <div id="subjectCardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- Populated by attendance-engine.js -->
+            </div>
+          </div>
+
+        </div>
       </section>
 
     </main>
@@ -290,6 +423,14 @@
     <!-- Notification Toast -->
     <div id="toastNotification" class="toast">Link copied to clipboard!</div>
 
+    <!-- Floating Attendy Chatbot FAB Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+      <button id="aiChatToggleBtn" onclick="toggleAttendyChat()" class="bg-gradient-to-r from-sky-500 to-indigo-600 text-white p-3.5 rounded-full shadow-2xl flex items-center space-x-2 transform hover:scale-105 transition cursor-pointer border border-sky-400/30">
+        <span class="text-2xl">🤖</span>
+        <span class="font-bold text-xs pr-1 hidden sm:inline">Attendy AI Advisor</span>
+      </button>
+    </div>
+
     <!-- Footer for Jury Evaluation -->
     <footer class="footer">
       <div>Built with ❤️ by <strong>THE QUANTUM QUAD</strong> &nbsp;•&nbsp; Hackathon Grand Finale Entry</div>
@@ -298,7 +439,8 @@
   </div>
 
   <script src="3d-map.js"></script>
-  <script src="attendance.js"></script>
+  <script src="timetables.js"></script>
+  <script src="attendance-engine.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
