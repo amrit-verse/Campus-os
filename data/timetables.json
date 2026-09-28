@@ -1,0 +1,291 @@
+{
+  "floors": ["Ground Floor", "1st Floor", "2nd Floor", "3rd Floor"],
+  "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+  "rooms": [
+    {
+      "id": "G-101",
+      "name": "Ground Floor Lecture Hall 1",
+      "floor": "Ground Floor",
+      "capacity": 60,
+      "features": ["AC", "Projector", "Smart Board"],
+      "schedule": {
+        "Monday": [["08:30", "10:10", "IV ECE A - Signals & Systems", "IV ECE A"], ["11:20", "12:10", "IV ECE B - Seminar", "IV ECE B"], ["14:00", "16:30", "IV ECE B - Project Work", "IV ECE B"]],
+        "Tuesday": [["09:20", "11:20", "IV ECE A - Digital Comm", "IV ECE A"], ["13:10", "15:00", "III ECE DS - Machine Learning", "III ECE DS"]],
+        "Wednesday": [["08:30", "10:10", "IV ECE B - Antenna Theory", "IV ECE B"], ["11:20", "12:10", "Guest Lecture", "General"]],
+        "Thursday": [["10:30", "12:10", "IV ECE A - Wireless Comm", "IV ECE A"], ["13:10", "14:50", "IV ECE B - Elective III", "IV ECE B"]],
+        "Friday": [["08:30", "11:20", "IV ECE A - Capstone Design", "IV ECE A"], ["14:00", "16:00", "IV ECE B - Capstone Design", "IV ECE B"]],
+        "Saturday": [["09:00", "12:00", "Workshop", "All Sections"]]
+      }
+    },
+    {
+      "id": "G-102",
+      "name": "Ground Floor Classroom 2",
+      "floor": "Ground Floor",
+      "capacity": 45,
+      "features": ["AC"],
+      "schedule": {
+        "Monday": [["10:30", "12:10", "III BME - Bio-Sensors", "III BME"], ["14:00", "15:40", "III BME - Clinical Eng", "III BME"]],
+        "Tuesday": [["08:30", "10:10", "II BME - Physiology", "II BME"], ["11:20", "12:10", "II BME - Anatomy", "II BME"]],
+        "Wednesday": [["09:20", "11:20", "III BME - Medical Imaging", "III BME"], ["13:10", "14:50", "II BME - Biomechanics", "II BME"]],
+        "Thursday": [["08:30", "10:10", "III BME - Biomaterials", "III BME"], ["15:00", "16:30", "II BME - Seminar", "II BME"]],
+        "Friday": [["10:30", "12:10", "II BME - Bio-Signals", "II BME"], ["13:10", "15:00", "III BME - Hospital Admin", "III BME"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "G-103",
+      "name": "Ground Floor Seminar Room",
+      "floor": "Ground Floor",
+      "capacity": 50,
+      "features": ["Projector"],
+      "schedule": {
+        "Monday": [["09:20", "11:20", "I Year SEEE - Physics", "I SEEE"], ["13:10", "14:50", "I Year SEEE - Chemistry", "I SEEE"]],
+        "Tuesday": [["10:30", "12:10", "I Year SEEE - Math I", "I SEEE"], ["15:00", "16:30", "I Year SEEE - Mentoring", "I SEEE"]],
+        "Wednesday": [["08:30", "10:10", "I Year SEEE - Basic EE", "I SEEE"], ["11:20", "12:10", "I Year SEEE - English", "I SEEE"]],
+        "Thursday": [["09:20", "11:20", "I Year SEEE - Problem Solving", "I SEEE"], ["13:10", "15:40", "I Year SEEE - CAD Practice", "I SEEE"]],
+        "Friday": [["08:30", "10:10", "I Year SEEE - Environmental Science", "I SEEE"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "G-104",
+      "name": "Ground Floor Active Learning Room",
+      "floor": "Ground Floor",
+      "capacity": 70,
+      "features": ["AC", "Projector", "Smart Board"],
+      "schedule": {
+        "Monday": [["11:20", "12:10", "II ECE DS A - Python Programming", "II ECE DS A"], ["15:00", "16:30", "II ECE DS A - Data Structures", "II ECE DS A"]],
+        "Tuesday": [["08:30", "10:10", "II ECE DS B - Algo Design", "II ECE DS B"], ["13:10", "14:50", "II ECE DS B - Linear Algebra", "II ECE DS B"]],
+        "Wednesday": [["10:30", "12:10", "II ECE DS A - Discrete Math", "II ECE DS A"], ["14:00", "15:40", "II ECE DS B - Database Systems", "II ECE DS B"]],
+        "Thursday": [["08:30", "11:20", "II ECE DS A/B - Joint Seminar", "II ECE DS"]],
+        "Friday": [["09:20", "11:20", "II ECE DS A - OS Fundamentals", "II ECE DS A"], ["13:10", "15:00", "II ECE DS B - Web Dev", "II ECE DS B"]],
+        "Saturday": [["10:00", "12:00", "Hackathon Preparation", "Open"]]
+      }
+    },
+    {
+      "id": "F1-201",
+      "name": "1st Floor Classroom 201 (IV ECE A)",
+      "floor": "1st Floor",
+      "capacity": 60,
+      "features": ["AC", "Projector"],
+      "schedule": {
+        "Monday": [["08:30", "10:10", "IV ECE A - VLSI Design", "IV ECE A"], ["10:30", "12:10", "IV ECE A - Embedded Systems", "IV ECE A"], ["13:10", "14:50", "IV ECE A - Optical Comm", "IV ECE A"]],
+        "Tuesday": [["08:30", "11:20", "IV ECE A - Embedded Systems Lab", "IV ECE A"], ["13:10", "15:40", "IV ECE A - Mini Project", "IV ECE A"]],
+        "Wednesday": [["09:20", "11:20", "IV ECE A - Computer Networks", "IV ECE A"], ["14:00", "16:30", "IV ECE A - Placement Training", "IV ECE A"]],
+        "Thursday": [["08:30", "10:10", "IV ECE A - RF Circuit Design", "IV ECE A"], ["11:20", "12:10", "IV ECE A - Professional Ethics", "IV ECE A"]],
+        "Friday": [["09:20", "11:20", "IV ECE A - High Speed Devices", "IV ECE A"], ["13:10", "14:50", "IV ECE A - Tutorial", "IV ECE A"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "F1-202",
+      "name": "1st Floor Classroom 202 (IV ECE B)",
+      "floor": "1st Floor",
+      "capacity": 60,
+      "features": ["AC", "Projector"],
+      "schedule": {
+        "Monday": [["09:20", "11:20", "IV ECE B - Embedded Systems", "IV ECE B"], ["13:10", "15:40", "IV ECE B - VLSI Lab", "IV ECE B"]],
+        "Tuesday": [["08:30", "10:10", "IV ECE B - Computer Networks", "IV ECE B"], ["10:30", "12:10", "IV ECE B - VLSI Design", "IV ECE B"]],
+        "Wednesday": [["08:30", "11:20", "IV ECE B - Project Work Phase I", "IV ECE B"], ["13:10", "14:50", "IV ECE B - Optical Comm", "IV ECE B"]],
+        "Thursday": [["09:20", "11:20", "IV ECE B - RF Circuit Design", "IV ECE B"], ["14:00", "16:00", "IV ECE B - Aptitude Session", "IV ECE B"]],
+        "Friday": [["08:30", "10:10", "IV ECE B - Professional Ethics", "IV ECE B"], ["11:20", "12:10", "IV ECE B - High Speed Devices", "IV ECE B"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "F1-203",
+      "name": "1st Floor Classroom 203 (III ECE A)",
+      "floor": "1st Floor",
+      "capacity": 55,
+      "features": ["Projector"],
+      "schedule": {
+        "Monday": [["08:30", "10:10", "III ECE A - Microcontrollers", "III ECE A"], ["11:20", "12:10", "III ECE A - Control Systems", "III ECE A"]],
+        "Tuesday": [["09:20", "11:20", "III ECE A - Digital Signal Processing", "III ECE A"], ["13:10", "15:00", "III ECE A - DSP Lab", "III ECE A"]],
+        "Wednesday": [["08:30", "10:10", "III ECE A - Electromagnetics", "III ECE A"], ["13:10", "15:40", "III ECE A - Microcontroller Lab", "III ECE A"]],
+        "Thursday": [["10:30", "12:10", "III ECE A - Linear Integrated Circuits", "III ECE A"], ["14:00", "15:40", "III ECE A - Transmission Lines", "III ECE A"]],
+        "Friday": [["08:30", "11:20", "III ECE A - Industrial Training", "III ECE A"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "F1-204",
+      "name": "1st Floor Classroom 204 (III ECE B)",
+      "floor": "1st Floor",
+      "capacity": 55,
+      "features": ["AC", "Smart Board"],
+      "schedule": {
+        "Monday": [["10:30", "12:10", "III ECE B - Digital Signal Processing", "III ECE B"], ["13:10", "15:00", "III ECE B - Microcontrollers", "III ECE B"]],
+        "Tuesday": [["08:30", "10:10", "III ECE B - Control Systems", "III ECE B"], ["11:20", "12:10", "III ECE B - Transmission Lines", "III ECE B"]],
+        "Wednesday": [["09:20", "11:20", "III ECE B - Linear Integrated Circuits", "III ECE B"], ["14:00", "16:30", "III ECE B - Microcontroller Lab", "III ECE B"]],
+        "Thursday": [["08:30", "11:20", "III ECE B - DSP Lab", "III ECE B"], ["13:10", "14:50", "III ECE B - Electromagnetics", "III ECE B"]],
+        "Friday": [["10:30", "12:10", "III ECE B - Technical Seminar", "III ECE B"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "F1-205",
+      "name": "1st Floor Advanced DSP & Communication Lab",
+      "floor": "1st Floor",
+      "capacity": 40,
+      "features": ["AC", "Lab", "Projector"],
+      "schedule": {
+        "Monday": [["08:30", "11:20", "III ECE A - Comm Lab", "III ECE A"], ["13:10", "16:00", "III ECE B - Comm Lab", "III ECE B"]],
+        "Tuesday": [["09:20", "12:10", "IV ECE A - Advanced Comm Lab", "IV ECE A"]],
+        "Wednesday": [["13:10", "16:00", "IV ECE B - Advanced Comm Lab", "IV ECE B"]],
+        "Thursday": [["08:30", "11:20", "III ECE DS - Signal Analysis Lab", "III ECE DS"]],
+        "Friday": [["13:10", "16:00", "M.Tech Communication Research", "Research"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "F2-301",
+      "name": "2nd Floor Classroom 301 (III ECE DS)",
+      "floor": "2nd Floor",
+      "capacity": 60,
+      "features": ["AC", "Projector", "Smart Board"],
+      "schedule": {
+        "Monday": [["08:30", "10:10", "III ECE DS - Machine Learning for Signals", "III ECE DS"], ["10:30", "12:10", "III ECE DS - Big Data Analytics", "III ECE DS"]],
+        "Tuesday": [["09:20", "11:20", "III ECE DS - Deep Learning", "III ECE DS"], ["13:10", "15:40", "III ECE DS - ML Lab", "III ECE DS"]],
+        "Wednesday": [["08:30", "11:20", "III ECE DS - Data Science Capstone", "III ECE DS"], ["13:10", "14:50", "III ECE DS - Cloud Computing", "III ECE DS"]],
+        "Thursday": [["10:30", "12:10", "III ECE DS - Computer Vision", "III ECE DS"], ["14:00", "16:00", "III ECE DS - Seminar", "III ECE DS"]],
+        "Friday": [["08:30", "10:10", "III ECE DS - AI Ethics", "III ECE DS"], ["11:20", "12:10", "III ECE DS - Pattern Recognition", "III ECE DS"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "F2-302",
+      "name": "2nd Floor Classroom 302 (II ECE DS A)",
+      "floor": "2nd Floor",
+      "capacity": 50,
+      "features": ["AC"],
+      "schedule": {
+        "Monday": [["09:20", "11:20", "II ECE DS A - Object Oriented Prog", "II ECE DS A"], ["13:10", "14:50", "II ECE DS A - Digital Logic", "II ECE DS A"]],
+        "Tuesday": [["08:30", "10:10", "II ECE DS A - Probability & Stats", "II ECE DS A"], ["11:20", "12:10", "II ECE DS A - Circuit Theory", "II ECE DS A"]],
+        "Wednesday": [["08:30", "11:20", "II ECE DS A - Data Structures Lab", "II ECE DS A"], ["14:00", "16:00", "II ECE DS A - Signals & Systems", "II ECE DS A"]],
+        "Thursday": [["09:20", "11:20", "II ECE DS A - Database Management", "II ECE DS A"], ["13:10", "15:40", "II ECE DS A - Digital Circuits Lab", "II ECE DS A"]],
+        "Friday": [["08:30", "10:10", "II ECE DS A - Environmental Studies", "II ECE DS A"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "F2-303",
+      "name": "2nd Floor Classroom 303 (II ECE DS B)",
+      "floor": "2nd Floor",
+      "capacity": 50,
+      "features": ["Projector"],
+      "schedule": {
+        "Monday": [["08:30", "10:10", "II ECE DS B - Digital Logic", "II ECE DS B"], ["11:20", "12:10", "II ECE DS B - Probability & Stats", "II ECE DS B"]],
+        "Tuesday": [["09:20", "11:20", "II ECE DS B - Object Oriented Prog", "II ECE DS B"], ["13:10", "16:00", "II ECE DS B - Data Structures Lab", "II ECE DS B"]],
+        "Wednesday": [["10:30", "12:10", "II ECE DS B - Circuit Theory", "II ECE DS B"], ["13:10", "14:50", "II ECE DS B - Signals & Systems", "II ECE DS B"]],
+        "Thursday": [["08:30", "11:20", "II ECE DS B - Digital Circuits Lab", "II ECE DS B"], ["14:00", "16:00", "II ECE DS B - Database Management", "II ECE DS B"]],
+        "Friday": [["09:20", "11:20", "II ECE DS B - Technical English", "II ECE DS B"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "F2-304",
+      "name": "2nd Floor Classroom 304 (III BME)",
+      "floor": "2nd Floor",
+      "capacity": 50,
+      "features": ["AC", "Smart Board"],
+      "schedule": {
+        "Monday": [["08:30", "10:10", "III BME - Diagnostic Equipment", "III BME"], ["11:20", "12:10", "III BME - Therapeutic Devices", "III BME"]],
+        "Tuesday": [["10:30", "12:10", "III BME - Bio-Fluid Dynamics", "III BME"], ["14:00", "16:30", "III BME - Hospital Training", "III BME"]],
+        "Wednesday": [["08:30", "10:10", "III BME - Medical Optics", "III BME"], ["13:10", "15:00", "III BME - Rehabilitation Eng", "III BME"]],
+        "Thursday": [["09:20", "11:20", "III BME - Neural Engineering", "III BME"], ["13:10", "15:40", "III BME - Bio-Instrumentation Lab", "III BME"]],
+        "Friday": [["08:30", "11:20", "III BME - Project Work", "III BME"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "F2-305",
+      "name": "2nd Floor Biomedical Instrumentation Lab",
+      "floor": "2nd Floor",
+      "capacity": 40,
+      "features": ["AC", "Lab"],
+      "schedule": {
+        "Monday": [["13:10", "16:00", "II BME - Anatomy & Physiology Lab", "II BME"]],
+        "Tuesday": [["08:30", "11:20", "III BME - Medical Electronics Lab", "III BME"]],
+        "Wednesday": [["09:20", "12:10", "II BME - Sensor Calibration Lab", "II BME"]],
+        "Thursday": [["13:10", "16:00", "III BME - Diagnostic Systems Lab", "III BME"]],
+        "Friday": [["08:30", "11:20", "Research Scholar Testing", "Research"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "F3-401",
+      "name": "3rd Floor Classroom 401 (II BME)",
+      "floor": "3rd Floor",
+      "capacity": 55,
+      "features": ["AC", "Projector"],
+      "schedule": {
+        "Monday": [["09:20", "11:20", "II BME - Electronic Devices", "II BME"], ["13:10", "14:50", "II BME - Human Anatomy", "II BME"]],
+        "Tuesday": [["08:30", "10:10", "II BME - Bio-Chemistry", "II BME"], ["11:20", "12:10", "II BME - Transforms & PDE", "II BME"]],
+        "Wednesday": [["08:30", "11:20", "II BME - Electronic Circuits Lab", "II BME"], ["14:00", "16:00", "II BME - Transducer Engineering", "II BME"]],
+        "Thursday": [["09:20", "11:20", "II BME - Environmental Science", "II BME"], ["13:10", "15:00", "II BME - Pathology", "II BME"]],
+        "Friday": [["08:30", "10:10", "II BME - Seminar", "II BME"], ["11:20", "12:10", "II BME - Mentor Session", "II BME"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "F3-402",
+      "name": "3rd Floor Classroom 402 (I Year SEEE A)",
+      "floor": "3rd Floor",
+      "capacity": 70,
+      "features": ["AC", "Projector", "Smart Board"],
+      "schedule": {
+        "Monday": [["08:30", "10:10", "I Year SEEE A - Engineering Math I", "I SEEE A"], ["10:30", "12:10", "I Year SEEE A - Physics for Electrical Sciences", "I SEEE A"]],
+        "Tuesday": [["09:20", "11:20", "I Year SEEE A - Basic Civil & Mechanical", "I SEEE A"], ["13:10", "15:40", "I Year SEEE A - Physics Lab", "I SEEE A"]],
+        "Wednesday": [["08:30", "10:10", "I Year SEEE A - Programming in C", "I SEEE A"], ["11:20", "12:10", "I Year SEEE A - Technical Communication", "I SEEE A"]],
+        "Thursday": [["08:30", "11:20", "I Year SEEE A - C Programming Lab", "I SEEE A"], ["13:10", "14:50", "I Year SEEE A - Engineering Graphics", "I SEEE A"]],
+        "Friday": [["09:20", "11:20", "I Year SEEE A - Electric Circuit Analysis", "I SEEE A"], ["14:00", "16:00", "I Year SEEE A - Activity Hour", "I SEEE A"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "F3-403",
+      "name": "3rd Floor Classroom 403 (I Year SEEE B)",
+      "floor": "3rd Floor",
+      "capacity": 70,
+      "features": ["Projector"],
+      "schedule": {
+        "Monday": [["09:20", "11:20", "I Year SEEE B - Programming in C", "I SEEE B"], ["13:10", "14:50", "I Year SEEE B - Engineering Math I", "I SEEE B"]],
+        "Tuesday": [["08:30", "10:10", "I Year SEEE B - Physics for Electrical Sciences", "I SEEE B"], ["11:20", "12:10", "I Year SEEE B - Electric Circuit Analysis", "I SEEE B"]],
+        "Wednesday": [["08:30", "11:20", "I Year SEEE B - Physics & Chemistry Lab", "I SEEE B"], ["14:00", "16:00", "I Year SEEE B - Basic Civil & Mechanical", "I SEEE B"]],
+        "Thursday": [["09:20", "11:20", "I Year SEEE B - Technical Communication", "I SEEE B"], ["13:10", "15:40", "I Year SEEE B - C Programming Lab", "I SEEE B"]],
+        "Friday": [["08:30", "10:10", "I Year SEEE B - Engineering Graphics", "I SEEE B"], ["11:20", "12:10", "I Year SEEE B - Mentor Session", "I SEEE B"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "F3-404",
+      "name": "3rd Floor VLSI & Embedded Systems Lab",
+      "floor": "3rd Floor",
+      "capacity": 45,
+      "features": ["AC", "Lab"],
+      "schedule": {
+        "Monday": [["08:30", "11:20", "IV ECE A - Cadence VLSI Lab", "IV ECE A"], ["13:10", "16:00", "IV ECE B - Cadence VLSI Lab", "IV ECE B"]],
+        "Tuesday": [["13:10", "16:00", "III ECE DS - Embedded AI Lab", "III ECE DS"]],
+        "Wednesday": [["08:30", "11:20", "III ECE A - FPGA Design Lab", "III ECE A"]],
+        "Thursday": [["13:10", "16:00", "III ECE B - FPGA Design Lab", "III ECE B"]],
+        "Friday": [["08:30", "11:20", "M.Tech VLSI Project Lab", "M.Tech"]],
+        "Saturday": []
+      }
+    },
+    {
+      "id": "IST 509",
+      "name": "3rd Floor Innovation & Project Lab (IST 509)",
+      "floor": "3rd Floor",
+      "capacity": 80,
+      "features": ["AC", "Projector", "Smart Board", "Lab"],
+      "schedule": {
+        "Monday": [["10:00", "11:30", "Faculty Board Meeting", "Admin"]],
+        "Tuesday": [["14:00", "16:00", "Robotics Club Workshop", "Clubs"]],
+        "Wednesday": [["11:00", "12:30", "Research Presentation", "Research"]],
+        "Thursday": [["09:00", "10:30", "IoT Innovation Lab", "Project"]],
+        "Friday": [["15:00", "16:30", "Hackathon Mentoring", "Open"]],
+        "Saturday": [["09:00", "13:00", "Student Project Exhibition", "All"]]
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "rooms": [
+    {
+      "id": "G-101",
+      "floor": "Ground Floor",
+      "capacity": 40,
+      "features": [
+        "AC",
+        "Projector"
+      ],
+      "occupied": [
+        [
+          "09:00",
+          "10:00"
+        ],
+        [
+          "13:00",
+          "14:00"
+        ]
+      ]
+    }
+  ]
+}
