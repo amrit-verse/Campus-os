@@ -19,13 +19,19 @@
 <body>
   <div class="app-shell">
     
-    <!-- Top Navigation Bar -->
-    <header class="navbar">
+    <!-- macOS Style Top Navigation Window Header -->
+    <header class="navbar macos-window-header">
+      <div class="mac-window-controls">
+        <span class="mac-dot close"></span>
+        <span class="mac-dot minimize"></span>
+        <span class="mac-dot maximize"></span>
+      </div>
+
       <div class="nav-brand">
         <div class="brand-logo">Q</div>
         <div class="brand-text">
           <strong>THE QUANTUM QUAD</strong>
-          <small>SMARTSEARCH PRO • GRAND FINALE EDITION</small>
+          <small>SMARTSEARCH PRO • macOS FINALE EDITION</small>
         </div>
       </div>
 
@@ -66,8 +72,8 @@
     <!-- Main View Content -->
     <main class="main-content">
       
-      <!-- Hero Header Section -->
-      <section class="hero-banner">
+      <!-- macOS Style Hero Glass Banner -->
+      <section class="hero-banner macos-card">
         <div class="hero-content">
           <span class="kicker">GRAND FINALE UNIFIED HUB • THE QUANTUM QUAD</span>
           <h1>The Free Class Locator.<br><em>Zero friction, 3D maps & squad share.</em></h1>
@@ -87,25 +93,30 @@
         </div>
       </section>
 
-      <!-- 1-Click Jury Quick Demo Bar -->
-      <section class="jury-demo-bar">
-        <span class="demo-bar-title">✨ Jury 1-Click Feature Demos:</span>
-        <button class="jury-demo-btn" onclick="runJuryDemo('ai_ground')">🤖 AI Room Finder (Ground Floor AC)</button>
-        <button class="jury-demo-btn" onclick="runJuryDemo('3d_countdown')">🏢 3D Map & Live Countdown</button>
-        <button class="jury-demo-btn" onclick="runJuryDemo('squad_share')">💬 Call the Squad WhatsApp Share</button>
-        <button class="jury-demo-btn" onclick="runJuryDemo('attendance_risk')">📊 Attendance Detention Risk</button>
+      <!-- macOS Action Control Bar for Jury 1-Click Demos -->
+      <section class="jury-demo-bar macos-control-bar">
+        <div class="demo-bar-label">
+          <span class="sparkle-gold">✨</span>
+          <strong>Jury Quick Demos:</strong>
+        </div>
+        <div class="demo-buttons-wrap">
+          <button class="jury-demo-btn" onclick="runJuryDemo('ai_ground')">🤖 AI Room Finder (Ground Floor AC)</button>
+          <button class="jury-demo-btn" onclick="runJuryDemo('3d_countdown')">🏢 3D Map & Live Countdown</button>
+          <button class="jury-demo-btn" onclick="runJuryDemo('squad_share')">💬 Call the Squad WhatsApp Share</button>
+          <button class="jury-demo-btn" onclick="runJuryDemo('attendance_risk')">📊 Attendance Detention Risk</button>
+        </div>
       </section>
 
-      <!-- View Switcher Tabs -->
-      <div class="view-tabs">
+      <!-- macOS Segmented Control Tabs -->
+      <div class="view-tabs macos-segmented-control">
         <button id="tab3DMap" class="tab-btn active"><span class="icon">🏢</span> 3D Free Class Map</button>
         <button id="tabGrid" class="tab-btn"><span class="icon">📊</span> Live Floor Grid</button>
         <button id="tabAIFinder" class="tab-btn"><span class="icon">🤖</span> AI Smart Finder</button>
         <button id="tabAttendance" class="tab-btn"><span class="icon">🧮</span> Attendance Calculator</button>
       </div>
 
-      <!-- PHASE 1: AI Natural Language Finder Bar -->
-      <section class="ai-finder-card" id="aiFinderSection">
+      <!-- PHASE 1: AI Natural Language Finder Card -->
+      <section class="ai-finder-card macos-card" id="aiFinderSection">
         <div class="card-header">
           <div>
             <span class="section-kicker">NATURAL LANGUAGE ROOM SEARCH</span>
@@ -114,10 +125,10 @@
           <span class="ai-status-tag" id="aiStatusTag">AI READY</span>
         </div>
 
-        <div class="search-bar-wrap">
+        <div class="search-bar-wrap macos-input-wrap">
           <span class="sparkle">✦</span>
           <input id="aiSearchQuery" type="text" value="I need an AC room on the ground floor for me and my team for the next 2 hours" placeholder="e.g. I need an AC room on 1st floor with projector for 90 minutes">
-          <button id="aiSearchBtn" class="primary-btn">Search AI ↗</button>
+          <button id="aiSearchBtn" class="primary-btn macos-btn">Search AI ↗</button>
         </div>
 
         <div class="prompt-suggestions">
@@ -131,9 +142,9 @@
         <div id="aiIntentResult" class="intent-banner"></div>
       </section>
 
-      <!-- PHASE 2: 3D Interactive Building Map -->
+      <!-- PHASE 2: 3D Interactive Building Map Panel -->
       <section class="view-panel active" id="view3DMap">
-        <div class="map-toolbar">
+        <div class="map-toolbar macos-card-head">
           <div class="map-title">
             <h3>3D Building Visualization — FreeRoom Engine</h3>
             <p>Rotate, zoom, and click rooms to view live countdown timers & invite your squad</p>
@@ -156,12 +167,12 @@
         </div>
 
         <!-- WebGL 3D Canvas Container -->
-        <div id="map3dContainer" class="map-canvas-container"></div>
+        <div id="map3dContainer" class="map-canvas-container macos-canvas-window"></div>
       </section>
 
       <!-- PHASE 1: Live Floor Grid Section -->
       <section class="view-panel" id="viewGrid">
-        <div class="grid-controls-bar">
+        <div class="grid-controls-bar macos-card">
           <div class="filter-group">
             <label>Floor:</label>
             <select id="filterFloor">
@@ -217,7 +228,7 @@
 
     <!-- PHASE 2: Interactive Room Modal with Live Countdown & Squad Share -->
     <div id="roomModal" class="modal-backdrop">
-      <div class="modal-card">
+      <div class="modal-card macos-modal-card">
         <button id="modalCloseBtn" class="modal-close">&times;</button>
         
         <div class="modal-header">
@@ -232,7 +243,7 @@
         <div class="modal-body">
           
           <!-- PHASE 2: Live Countdown Timer -->
-          <div class="countdown-box">
+          <div class="countdown-box macos-timer-box">
             <span class="timer-label" id="timerLabel">TIME REMAINING UNTIL NEXT CLASS:</span>
             <div class="timer-display" id="countdownTimer">01:24:15</div>
             <p class="timer-sub" id="timerSubtext">Free until 02:30 PM</p>
@@ -257,7 +268,7 @@
           </div>
 
           <!-- PHASE 2: "Call the Squad" WhatsApp Share Integration -->
-          <div class="squad-callout">
+          <div class="squad-callout macos-squad-callout">
             <div class="squad-copy">
               <h3>📣 Call the Squad!</h3>
               <p>Claim this room and send your group a pre-filled WhatsApp invite instantly.</p>
